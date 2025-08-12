@@ -10,6 +10,7 @@
     "lint": "eslint ./src"
   },
   "dependencies": {
+    "@dimasmds/react-redux-loading-bar": "^5.0.10",
     "@reduxjs/toolkit": "^2.8.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
