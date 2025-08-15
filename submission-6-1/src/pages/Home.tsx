@@ -1,7 +1,30 @@
 function Home() {
   return (
-    <div>
-      <p>Home</p>
+    <div className="p-8">
+      <h2>Klasmen Pengguna Aktif</h2>
+
+      <p>home start</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home end</p>
     </div>
   );
 }
