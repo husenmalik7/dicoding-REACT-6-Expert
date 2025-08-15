@@ -1,8 +1,23 @@
+import ThreadsIcon from '../assets/icons/ThreadsIcon';
+import LeaderboardsIcon from '../assets/icons/LeaderboardsIcon';
+import LoginIcon from '../assets/icons/LoginIcon';
+
 function Footer() {
   return (
     <footer>
-      <div className="fixed bg-white border-1 border-gray-300 w-full bottom-0 h-16">
-        <p>footer</p>
+      <div className="fixed bottom-0 flex h-16 w-full items-center justify-center gap-4 border-1 border-gray-300 bg-white">
+        <div className="flex cursor-pointer flex-col items-center">
+          <ThreadsIcon />
+          <p>Threads</p>
+        </div>
+        <div className="flex cursor-pointer flex-col items-center">
+          <LeaderboardsIcon />
+          <p>Leaderboards</p>
+        </div>
+        <div className="flex cursor-pointer flex-col items-center">
+          <LoginIcon />
+          <p>Login</p>
+        </div>
       </div>
     </footer>
   );
