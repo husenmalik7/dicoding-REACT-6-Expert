@@ -1,0 +1,27 @@
+const api = (() => {
+  const BASE_URL = 'https://forum-api.dicoding.dev/v1';
+
+  async function getAllLeaderboards() {
+    const response = await fetch(`${BASE_URL}/leaderboards`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const {
+      data: { leaderboards },
+    } = responseJson;
+
+    return leaderboards;
+  }
+
+  return {
+    getAllLeaderboards,
+  };
+})();
+
+export default api;
