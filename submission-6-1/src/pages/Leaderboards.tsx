@@ -1,4 +1,17 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveLeaderboards } from '../states/leaderboards/action';
+
+import type { AppDispatch, RootState } from '../states';
+
 function Leaderboards() {
+  const leaderboards = useSelector((state: RootState) => state.leaderboards);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(asyncReceiveLeaderboards());
+  }, [dispatch]);
+
   return (
     <div className="p-8">
       <h2 className="mb-4 text-2xl font-medium">Klasemen Pengguna Aktif</h2>
@@ -8,17 +21,15 @@ function Leaderboards() {
         <p>Skor</p>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="flex h-12 items-center">
-          <img
-            className="mr-2 h-10 rounded-full"
-            src="https://ui-avatars.com/api/?name=Dimas Saputra&amp;background=random"
-            alt="Dimas"
-          />
-          <p className="text-xl">Dimassd</p>
+      {leaderboards.map((leaderboard, index) => (
+        <div key={index} className="mb-4 flex items-center justify-between">
+          <div className="flex items-center">
+            <img className="mr-2 h-10 rounded-full" src={leaderboard.user.avatar} alt={leaderboard.user.name} />
+            <p className="text-xl">{leaderboard.user.name}</p>
+          </div>
+          <p className="text-xl">{leaderboard.score}</p>
         </div>
-        <p className="text-xl">5555</p>
-      </div>
+      ))}
     </div>
   );
 }
