@@ -1,4 +1,4 @@
-function ThumbsUp() {
+function ThumbsUpIcon() {
   return (
     <svg
       stroke="currentColor"
@@ -15,4 +15,4 @@ function ThumbsUp() {
   );
 }
 
-export default ThumbsUp;
+export default ThumbsUpIcon;
