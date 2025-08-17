@@ -19,8 +19,27 @@ const api = (() => {
     return leaderboards;
   }
 
+  async function getAllThreads() {
+    const response = await fetch(`${BASE_URL}/threads`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const {
+      data: { threads },
+    } = responseJson;
+
+    return threads;
+  }
+
   return {
     getAllLeaderboards,
+    getAllThreads,
   };
 })();
 
