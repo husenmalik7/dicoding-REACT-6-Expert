@@ -18,21 +18,19 @@ function Home() {
     dispatch(asyncReceiveThreads());
   }, [dispatch]);
 
-
   return (
     <div className="p-8">
       <h2 className="mb-4 text-2xl font-medium">Diskusi Tersedia</h2>
 
-
       {threads.map((thread, index) => (
-
-        <div key={index}>
-          <p className="w-fit rounded-lg border-1 p-1 text-sm">#redux</p>
+        <div key={index} className="pb-4">
+          <p className="w-fit rounded-lg border-1 p-1 text-sm">#{thread.category}</p>
 
           <Link to={'/999a'} className="text-xl font-medium text-blue-600 visited:text-purple-600">
             {thread.title}
           </Link>
-          <p>Coba ceritakan dong, gimana pengalaman kalian belajar Redux di Dicoding?</p>
+
+          <p className="line-clamp-2" dangerouslySetInnerHTML={{ __html: thread.body }} />
           <div className="flex items-center gap-2.5 bg-amber-500">
             <div className="flex items-center gap-1">
               <ThumbsUpIcon />
@@ -49,14 +47,12 @@ function Home() {
               <p>1</p>
             </div>
 
-            <p>811 hari lalu</p>
+            <p>{thread.createdAt}</p>
             <p>Dibuat oleh Dimas Saputra</p>
           </div>
+          <hr className="mt-4" />
         </div>
-
-
       ))}
-
     </div>
   );
 }
