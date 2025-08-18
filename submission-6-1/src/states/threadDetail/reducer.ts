@@ -1,18 +1,18 @@
-import { ActionType, receiveThreadsActionCreator } from './action';
+import { ActionType, receiveThreadDetailActionCreator } from './action';
 
-import type { Thread } from './types';
+import type { ThreadDetail } from './types';
 import type { UnknownAction } from '@reduxjs/toolkit';
 
-type ThreadsAction = ReturnType<typeof receiveThreadsActionCreator>;
+type ThreadDetailAction = ReturnType<typeof receiveThreadDetailActionCreator>;
 
-function threadsReducer(threads: Thread[] = [], action: ThreadsAction | UnknownAction) {
+function threadDetailReducer(detailThread: ThreadDetail | null = null, action: ThreadDetailAction | UnknownAction) {
   switch (action.type) {
-    case ActionType.RECEIVE_THREADS:
-      return (action as ThreadsAction).payload.threads;
+    case ActionType.RECEIVE_THREAD_DETAIL:
+      return (action as ThreadDetailAction).payload.detailThread;
 
     default:
-      return threads;
+      return detailThread;
   }
 }
 
-export default threadsReducer;
+export default threadDetailReducer;

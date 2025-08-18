@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Leaderboards from './pages/Leaderboards';
+import ThreadDetail from './pages/ThreadDetail';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/leaderboards" element={<Leaderboards />} />
+          <Route path="/threads/:id" element={<ThreadDetail />} />
         </Routes>
       </main>
 

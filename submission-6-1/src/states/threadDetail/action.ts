@@ -1,26 +1,26 @@
 import api from '../../utils/api';
 
 import type { AppDispatch } from '../index';
-import type { Thread } from './types';
+import type { ThreadDetail } from './types';
 
 const ActionType = {
-  RECEIVE_THREADS: 'RECEIVE_THREADS',
+  RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
 };
 
-function receiveThreadsActionCreator(threads: Thread[]) {
+function receiveThreadDetailActionCreator(detailThread: ThreadDetail) {
   return {
-    type: ActionType.RECEIVE_THREADS,
+    type: ActionType.RECEIVE_THREAD_DETAIL,
     payload: {
-      threads,
+      detailThread,
     },
   };
 }
 
-function asyncReceiveThreads() {
+function asyncReceiveThreadDetail(threadId: string) {
   return async (dispatch: AppDispatch) => {
     try {
-      const threads = await api.getAllThreads();
-      dispatch(receiveThreadsActionCreator(threads));
+      const detailThread = await api.getThreadById(threadId);
+      dispatch(receiveThreadDetailActionCreator(detailThread));
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);
@@ -31,4 +31,4 @@ function asyncReceiveThreads() {
   };
 }
 
-export { ActionType, receiveThreadsActionCreator, asyncReceiveThreads };
+export { ActionType, receiveThreadDetailActionCreator, asyncReceiveThreadDetail };

@@ -55,10 +55,29 @@ const api = (() => {
     return users;
   }
 
+  async function getThreadById(threadId: string) {
+    const response = await fetch(`${BASE_URL}/threads/${threadId}`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const {
+      data: { detailThread },
+    } = responseJson;
+
+    return detailThread;
+  }
+
   return {
     getAllLeaderboards,
     getAllThreads,
     getAllUsers,
+    getThreadById,
   };
 })();
 
