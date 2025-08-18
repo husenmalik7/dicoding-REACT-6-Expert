@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import leaderboardsReducer from './leaderboards/reducer';
+import threadsReducer from './threads/reducer';
 
 const store = configureStore({
   reducer: {
     leaderboards: leaderboardsReducer,
+    threads: threadsReducer,
   },
 });
 
