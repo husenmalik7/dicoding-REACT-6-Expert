@@ -11,11 +11,9 @@ import ThumbsUpIcon from '../assets/icons/ThumbsUpIcon';
 import ThumbsDownIcon from '../assets/icons/ThumbsDownIcon';
 import CommentIcon from '../assets/icons/CommentIcon';
 
-// import type { AppDispatch, RootState } from '../states';
 import type { AppDispatch } from '../states';
 
 function Home() {
-  // const threads = useSelector((state: RootState) => state.threads);
   const threads = useSelector(selectMappedThreads);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -32,7 +30,7 @@ function Home() {
         <div key={index} className="pb-4">
           <p className="w-fit rounded-lg border-1 p-1 text-sm">#{thread.category}</p>
 
-          <Link to={'/999a'} className="text-xl font-medium text-blue-600 visited:text-purple-600">
+          <Link to={`/threads/${thread.id}`} className="text-xl font-medium text-blue-600 visited:text-purple-600">
             {thread.title}
           </Link>
 
@@ -40,20 +38,20 @@ function Home() {
           <div className="flex items-center gap-2.5 bg-amber-500">
             <div className="flex items-center gap-1">
               <ThumbsUpIcon />
-              <p>1</p>
+              <p>{thread.upVotesBy.length}</p>
             </div>
 
             <div className="flex items-center gap-1">
               <ThumbsDownIcon />
-              <p>0</p>
+              <p>{thread.downVotesBy.length}</p>
             </div>
 
             <div className="flex items-center gap-1">
               <CommentIcon />
-              <p>1</p>
+              <p>{thread.totalComments}</p>
             </div>
 
-            <p>{thread.createdAt}</p>
+            <p>{thread.postedAt}</p>
             <p>Dibuat oleh {thread.ownerName}</p>
           </div>
           <hr className="mt-4" />
