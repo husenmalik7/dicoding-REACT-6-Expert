@@ -1,21 +1,27 @@
 import { Link } from 'react-router-dom';
-
 import { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncReceiveThreads } from '../states/threads/action';
+import { asyncReceiveUsers } from '../states/users/action';
 
-import type { AppDispatch, RootState } from '../states';
+import selectMappedThreads from '../states/threads/selector';
 
 import ThumbsUpIcon from '../assets/icons/ThumbsUpIcon';
 import ThumbsDownIcon from '../assets/icons/ThumbsDownIcon';
 import CommentIcon from '../assets/icons/CommentIcon';
 
+// import type { AppDispatch, RootState } from '../states';
+import type { AppDispatch } from '../states';
+
 function Home() {
-  const threads = useSelector((state: RootState) => state.threads);
+  // const threads = useSelector((state: RootState) => state.threads);
+  const threads = useSelector(selectMappedThreads);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(asyncReceiveThreads());
+    dispatch(asyncReceiveUsers());
   }, [dispatch]);
 
   return (
@@ -48,7 +54,7 @@ function Home() {
             </div>
 
             <p>{thread.createdAt}</p>
-            <p>Dibuat oleh Dimas Saputra</p>
+            <p>Dibuat oleh {thread.ownerName}</p>
           </div>
           <hr className="mt-4" />
         </div>
