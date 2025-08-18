@@ -5,7 +5,17 @@ import type { Leaderboard } from './types';
 
 const ActionType = {
   RECEIVE_LEADERBOARDS: 'RECEIVE_LEADERBOARDS',
-};
+  SET_LOADING: 'SET_LOADING',
+} as const;
+
+function setLoading(isLoading: boolean) {
+  return {
+    type: ActionType.SET_LOADING,
+    payload: {
+      isLoading,
+    },
+  };
+}
 
 function receiveLeaderboardsActionCreator(leaderboards: Leaderboard[]) {
   return {
@@ -19,6 +29,7 @@ function receiveLeaderboardsActionCreator(leaderboards: Leaderboard[]) {
 function asyncReceiveLeaderboards() {
   return async (dispatch: AppDispatch) => {
     try {
+      dispatch(setLoading(true));
       const leaderboards = await api.getAllLeaderboards();
       dispatch(receiveLeaderboardsActionCreator(leaderboards));
     } catch (error: unknown) {
@@ -27,8 +38,10 @@ function asyncReceiveLeaderboards() {
       } else {
         alert('An unexpected error occurred.');
       }
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 }
 
-export { ActionType, receiveLeaderboardsActionCreator, asyncReceiveLeaderboards };
+export { ActionType, receiveLeaderboardsActionCreator, asyncReceiveLeaderboards, setLoading };

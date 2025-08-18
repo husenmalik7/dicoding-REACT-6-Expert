@@ -1,17 +1,35 @@
-import { ActionType, receiveLeaderboardsActionCreator } from './action';
+import { ActionType, receiveLeaderboardsActionCreator, setLoading } from './action';
 
 import type { Leaderboard } from './types';
-import type { UnknownAction } from '@reduxjs/toolkit';
 
-type LeaderboardsAction = ReturnType<typeof receiveLeaderboardsActionCreator>;
+interface LeaderboardsState {
+  data: Leaderboard[];
+  isLoading: boolean;
+}
 
-function leaderboardsReducer(leaderboards: Leaderboard[] = [], action: LeaderboardsAction | UnknownAction) {
+const initialState: LeaderboardsState = {
+  data: [],
+  isLoading: true,
+};
+
+type LeaderboardsAction = ReturnType<typeof receiveLeaderboardsActionCreator> | ReturnType<typeof setLoading>;
+
+function leaderboardsReducer(state: LeaderboardsState = initialState, action: LeaderboardsAction): LeaderboardsState {
   switch (action.type) {
     case ActionType.RECEIVE_LEADERBOARDS:
-      return (action as LeaderboardsAction).payload.leaderboards;
+      return {
+        ...state,
+        data: action.payload.leaderboards,
+      };
+
+    case ActionType.SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+      };
 
     default:
-      return leaderboards;
+      return state;
   }
 }
 

@@ -5,12 +5,14 @@ import { asyncReceiveLeaderboards } from '../states/leaderboards/action';
 import type { AppDispatch, RootState } from '../states';
 
 function Leaderboards() {
-  const leaderboards = useSelector((state: RootState) => state.leaderboards);
+  const { data: leaderboards, isLoading } = useSelector((state: RootState) => state.leaderboards);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(asyncReceiveLeaderboards());
   }, [dispatch]);
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div className="p-8">
