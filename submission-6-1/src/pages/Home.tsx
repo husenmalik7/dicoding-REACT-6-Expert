@@ -35,7 +35,7 @@ function Home() {
           </Link>
 
           <p className="line-clamp-2" dangerouslySetInnerHTML={{ __html: thread.body }} />
-          <div className="flex items-center gap-2.5 bg-amber-500">
+          <div className="flex items-center gap-2.5">
             <div className="flex items-center gap-1">
               <ThumbsUpIcon />
               <p>{thread.upVotesBy.length}</p>
