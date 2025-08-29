@@ -100,6 +100,42 @@ const api = (() => {
     return user;
   }
 
+  function putAccessToken(token: string) {
+    localStorage.setItem('accessToken', token);
+  }
+
+  function getAccessToken() {
+    return localStorage.getItem('accessToken');
+  }
+
+  async function _fetchWithAuth(url: string, options: RequestInit = {}) {
+    return fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    });
+  }
+
+  async function getOwnProfile() {
+    const response = await _fetchWithAuth(`${BASE_URL}/users/me`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const {
+      data: { user },
+    } = responseJson;
+
+    return user;
+  }
+
   async function login({ email, password }: { email: string; password: string }) {
     const response = await fetch(`${BASE_URL}/login`, {
       method: 'POST',
@@ -134,6 +170,8 @@ const api = (() => {
     getThreadById,
     register,
     login,
+    putAccessToken,
+    getOwnProfile,
   };
 })();
 
