@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,12 +10,14 @@ import selectMappedThreads from '../states/threads/selector';
 import ThumbsUpIcon from '../assets/icons/ThumbsUpIcon';
 import ThumbsDownIcon from '../assets/icons/ThumbsDownIcon';
 import CommentIcon from '../assets/icons/CommentIcon';
+import PlusIcon from '../assets/icons/PlusIcon';
 
 import type { AppDispatch } from '../states';
 
 function Home() {
   const threads = useSelector(selectMappedThreads);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(asyncReceiveThreads());
@@ -57,6 +59,10 @@ function Home() {
           <hr className="mt-4" />
         </div>
       ))}
+
+      <button onClick={() => navigate('/new')} className="fixed right-8 bottom-16 cursor-pointer text-5xl">
+        <PlusIcon />
+      </button>
     </div>
   );
 }
