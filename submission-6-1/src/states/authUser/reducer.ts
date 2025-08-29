@@ -1,11 +1,5 @@
 import { ActionType } from './action';
-
-type AuthUser = {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-};
+import type { AuthUser } from './types';
 
 function authUserReducer(authUser: AuthUser | null = null, action: any = {}) {
   switch (action.type) {
