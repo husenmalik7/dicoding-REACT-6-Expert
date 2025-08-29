@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -10,14 +11,18 @@ import ThreadDetail from './pages/ThreadDetail';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import type { AppDispatch, RootState } from './states';
 import { asyncUnsetAuthUser } from './states/authUser/action';
+import { asyncPreloadProcess } from './states/isPreload/action';
+
+import type { AppDispatch, RootState } from './states';
 
 function App() {
   const authUser = useSelector((state: RootState) => state.authUser);
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(authUser);
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
 
   function onLogout() {
     dispatch(asyncUnsetAuthUser());
