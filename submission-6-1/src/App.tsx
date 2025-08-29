@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -9,7 +10,13 @@ import ThreadDetail from './pages/ThreadDetail';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+import type { RootState } from './states';
+
 function App() {
+  const { authUser } = useSelector((state: RootState) => state);
+
+  console.log(authUser);
+
   return (
     <div className="bg-gray-100">
       <Header />
