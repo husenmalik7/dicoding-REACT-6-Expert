@@ -100,12 +100,40 @@ const api = (() => {
     return user;
   }
 
+  async function login({ email, password }: { email: string; password: string }) {
+    const response = await fetch(`${BASE_URL}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const {
+      data: { token },
+    } = responseJson;
+
+    return token;
+  }
+
   return {
     getAllLeaderboards,
     getAllThreads,
     getAllUsers,
     getThreadById,
     register,
+    login,
   };
 })();
 
