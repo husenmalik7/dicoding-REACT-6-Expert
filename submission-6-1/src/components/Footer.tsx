@@ -3,9 +3,33 @@ import LeaderboardsIcon from '../assets/icons/LeaderboardsIcon';
 import LoginIcon from '../assets/icons/LoginIcon';
 
 import { useNavigate } from 'react-router-dom';
+import type { AuthUser } from '../states/authUser/types';
 
-function Footer() {
+type FooterProps = {
+  authUser: AuthUser | null;
+  logout: () => void;
+};
+
+function Footer({ authUser, logout }: FooterProps) {
   const navigate = useNavigate();
+
+  function renderLoginLogout() {
+    console.log(authUser);
+    if (authUser)
+      return (
+        <div onClick={logout} className="flex cursor-pointer flex-col items-center">
+          <LoginIcon />
+          <p>Logout</p>
+        </div>
+      );
+
+    return (
+      <div onClick={() => navigate('/login')} className="flex cursor-pointer flex-col items-center">
+        <LoginIcon />
+        <p>Login</p>
+      </div>
+    );
+  }
 
   return (
     <footer>
@@ -18,10 +42,7 @@ function Footer() {
           <LeaderboardsIcon />
           <p>Leaderboards</p>
         </div>
-        <div onClick={() => navigate('/login')} className="flex cursor-pointer flex-col items-center">
-          <LoginIcon />
-          <p>Login</p>
-        </div>
+        {renderLoginLogout()}
       </div>
     </footer>
   );

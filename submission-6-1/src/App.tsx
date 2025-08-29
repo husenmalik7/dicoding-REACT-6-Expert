@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -10,12 +10,18 @@ import ThreadDetail from './pages/ThreadDetail';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import type { RootState } from './states';
+import type { AppDispatch, RootState } from './states';
+import { asyncUnsetAuthUser } from './states/authUser/action';
 
 function App() {
-  const { authUser } = useSelector((state: RootState) => state);
+  const authUser = useSelector((state: RootState) => state.authUser);
+  const dispatch = useDispatch<AppDispatch>();
 
   console.log(authUser);
+
+  function onLogout() {
+    dispatch(asyncUnsetAuthUser());
+  }
 
   return (
     <div className="bg-gray-100">
@@ -31,7 +37,7 @@ function App() {
         </Routes>
       </main>
 
-      <Footer />
+      <Footer authUser={authUser} logout={onLogout} />
     </div>
   );
 }
