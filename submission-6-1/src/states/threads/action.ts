@@ -5,6 +5,7 @@ import type { Thread } from './types';
 
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
+  ADD_THREADS: 'ADD_THREADS',
 };
 
 function receiveThreadsActionCreator(threads: Thread[]) {
@@ -13,6 +14,30 @@ function receiveThreadsActionCreator(threads: Thread[]) {
     payload: {
       threads,
     },
+  };
+}
+
+function addThreadActionCreator(thread: Thread) {
+  return {
+    type: ActionType.ADD_THREADS,
+    payload: {
+      thread,
+    },
+  };
+}
+
+function asyncAddThread({ title, body, category }: { title: string; body: string; category: string }) {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const thread = await api.createThread({ title, body, category });
+      dispatch(addThreadActionCreator(thread));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert('An unexpected error occurred.');
+      }
+    }
   };
 }
 
@@ -31,4 +56,4 @@ function asyncReceiveThreads() {
   };
 }
 
-export { ActionType, receiveThreadsActionCreator, asyncReceiveThreads };
+export { ActionType, receiveThreadsActionCreator, asyncReceiveThreads, asyncAddThread };
