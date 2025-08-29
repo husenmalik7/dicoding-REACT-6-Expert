@@ -1,15 +1,19 @@
-import { Link } from 'react-router-dom';
-import LoginInput from '../components/LoginInput';
-import { asyncSetAuthUser } from '../states/authUser/action';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
+import { asyncSetAuthUser } from '../states/authUser/action';
+
+import LoginInput from '../components/LoginInput';
 
 import type { AppDispatch } from '../states';
 
 function Login() {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   function onLogin({ email, password }: { email: string; password: string }) {
     dispatch(asyncSetAuthUser({ email, password }));
+    navigate('/');
   }
 
   return (

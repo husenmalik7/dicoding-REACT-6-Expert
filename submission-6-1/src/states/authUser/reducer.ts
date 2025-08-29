@@ -8,9 +8,6 @@ type Action =
 function authUserReducer(authUser: AuthUser | null = null, action: Action) {
   switch (action.type) {
     case ActionType.SET_AUTH_USER:
-      console.log(authUser);
-      console.log(action.payload);
-
       return action.payload.authUser;
 
     case ActionType.UNSET_AUTH_USER:
