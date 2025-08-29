@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom';
+import LoginInput from '../components/LoginInput';
 
 function Login() {
+  function onLogin({ email, password }: { email: string; password: string }) {
+    console.log(email, password);
+  }
+
   return (
     <div className="p-8">
       <p className="text-2xl font-medium">Login</p>
-      <form className="mt-3 flex flex-col gap-2">
-        <input type="email" placeholder="email" className="rounded-lg border-1 p-2" />
-        <input type="password" placeholder="password" className="rounded-lg border-1 p-2" />
-        <button className="cursor-pointer rounded-lg bg-blue-950 p-2 text-white" type="submit">
-          Login
-        </button>
-      </form>
+      <LoginInput login={onLogin} />
 
       <div className="mt-3 flex gap-x-1">
         Belum punya akun?
