@@ -31,4 +31,18 @@ function asyncReceiveUsers() {
   };
 }
 
-export { ActionType, receiveUsersActionCreator, asyncReceiveUsers };
+function asyncRegisterUser({ name, email, password }: { name: string; email: string; password: string }) {
+  return async () => {
+    try {
+      await api.register({ name, email, password });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert('An unexpected error occurred.');
+      }
+    }
+  };
+}
+
+export { ActionType, receiveUsersActionCreator, asyncReceiveUsers, asyncRegisterUser };
