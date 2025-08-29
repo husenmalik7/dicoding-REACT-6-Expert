@@ -1,8 +1,18 @@
 import { ActionType } from './action';
 
-function authUserReducer(authUser: any = null, action: any = {}) {
+type AuthUser = {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+};
+
+function authUserReducer(authUser: AuthUser | null = null, action: any = {}) {
   switch (action.type) {
     case ActionType.SET_AUTH_USER:
+      console.log(authUser);
+      console.log(action.payload);
+
       return action.payload.authUser;
 
     case ActionType.UNSET_AUTH_USER:
