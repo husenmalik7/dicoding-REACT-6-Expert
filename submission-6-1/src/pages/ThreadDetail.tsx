@@ -18,8 +18,6 @@ function ThreadDetail() {
   const threadDetail = useSelector(selectMappedThreads);
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(threadDetail);
-
   useEffect(() => {
     if (id) {
       dispatch(asyncReceiveThreadDetail(id));
