@@ -1,13 +1,23 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { asyncAddThread } from '../states/threads/action';
+
+import type { AppDispatch } from '../states';
 
 function NewThread() {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [body, setBody] = useState('');
 
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   function handleAdd(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(title, category, body);
+    dispatch(asyncAddThread({ title, body, category }));
+    navigate('/');
   }
 
   return (
