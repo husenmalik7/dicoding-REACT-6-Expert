@@ -136,6 +136,34 @@ const api = (() => {
     return user;
   }
 
+  async function createThread({ title, body, category }: { title: string; body: string; category: string }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/threads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        body,
+        category,
+      }),
+    });
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const {
+      data: { thread },
+    } = responseJson;
+
+    return thread;
+  }
+
   async function login({ email, password }: { email: string; password: string }) {
     const response = await fetch(`${BASE_URL}/login`, {
       method: 'POST',
@@ -172,6 +200,7 @@ const api = (() => {
     login,
     putAccessToken,
     getOwnProfile,
+    createThread,
   };
 })();
 
