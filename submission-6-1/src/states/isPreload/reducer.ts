@@ -1,22 +1,13 @@
-import type { AnyAction } from '@reduxjs/toolkit';
 import { ActionType } from './action';
-import type { AuthUser } from './types';
 
-type Action =
-  | { type: typeof ActionType.SET_AUTH_USER; payload: { authUser: AuthUser } }
-  | { type: typeof ActionType.UNSET_AUTH_USER };
-
-function authUserReducer(authUser: AuthUser | null = null, action: Action | AnyAction): AuthUser | null {
+function isPreloadReducer(isPreload: boolean = true, action: any) {
   switch (action.type) {
-    case ActionType.SET_AUTH_USER:
-      return action.payload.authUser;
-
-    case ActionType.UNSET_AUTH_USER:
-      return null;
+    case ActionType.SET_IS_PRELOAD:
+      return action.payload.isPreload;
 
     default:
-      return authUser;
+      return isPreload;
   }
 }
 
-export default authUserReducer;
+export default isPreloadReducer;
