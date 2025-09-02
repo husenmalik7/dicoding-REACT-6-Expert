@@ -4,6 +4,12 @@ interface Owner {
   avatar: string;
 }
 
+interface Owner2 {
+  id: string;
+  name: string;
+  email: string;
+}
+
 interface ThreadComment {
   id: string;
   content: string;
@@ -25,4 +31,13 @@ interface ThreadDetail {
   downVotesBy: string[];
 }
 
-export type { ThreadDetail };
+interface Comment {
+  id: string;
+  content: string;
+  createdAt: string;
+  upVotesBy: string[];
+  downVotesBy: string[];
+  owner: Owner2;
+}
+
+export type { ThreadDetail, Comment };

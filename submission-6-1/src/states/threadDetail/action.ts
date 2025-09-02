@@ -1,11 +1,36 @@
 import api from '../../utils/api';
 
 import type { AppDispatch } from '../index';
-import type { ThreadDetail } from './types';
+import type { ThreadDetail, Comment } from './types';
 
 const ActionType = {
   RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
+  ADD_COMMENT: 'ADD_COMMENT',
 };
+
+function addCommentActionCreator(comment: Comment) {
+  return {
+    type: ActionType.ADD_COMMENT,
+    payload: {
+      comment,
+    },
+  };
+}
+
+function asyncAddComment({ threadId, content }: { threadId: string; content: string }) {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const comment = await api.createComment({ threadId, content });
+      dispatch(addCommentActionCreator(comment));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert('An unexpected error occurred.');
+      }
+    }
+  };
+}
 
 function receiveThreadDetailActionCreator(detailThread: ThreadDetail) {
   return {
@@ -31,4 +56,4 @@ function asyncReceiveThreadDetail(threadId: string) {
   };
 }
 
-export { ActionType, receiveThreadDetailActionCreator, asyncReceiveThreadDetail };
+export { ActionType, receiveThreadDetailActionCreator, asyncReceiveThreadDetail, asyncAddComment };
