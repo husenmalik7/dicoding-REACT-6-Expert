@@ -14,7 +14,6 @@ function Footer({ authUser, logout }: FooterProps) {
   const navigate = useNavigate();
 
   function renderLoginLogout() {
-    console.log(authUser);
     if (authUser)
       return (
         <div onClick={logout} className="flex cursor-pointer flex-col items-center">

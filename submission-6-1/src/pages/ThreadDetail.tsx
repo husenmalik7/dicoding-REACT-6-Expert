@@ -1,9 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import type { AppDispatch } from '../states';
 import { asyncReceiveThreadDetail } from '../states/threadDetail/action';
 
 import ThumbsUpIcon from '../assets/icons/ThumbsUpIcon';
@@ -12,17 +11,53 @@ import selectMappedThreads from '../states/threadDetail/selector';
 
 import { postedAt } from '../utils';
 
+import type { AppDispatch, RootState } from '../states';
+
 function ThreadDetail() {
   const { id } = useParams();
 
   const threadDetail = useSelector(selectMappedThreads);
+  const authUser = useSelector((state: RootState) => state.authUser);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
     if (id) {
       dispatch(asyncReceiveThreadDetail(id));
     }
   }, [id, dispatch]);
+
+  function onComment(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    console.log(comment);
+  }
+
+  function renderCommentSection() {
+    if (authUser)
+      return (
+        <form onSubmit={(e) => onComment(e)}>
+          <div
+            className="min-h-24 rounded-lg border-1 p-2"
+            contentEditable="true"
+            onInput={(e) => setComment(e.currentTarget.innerHTML)}
+          ></div>
+          <button className="mt-2 w-full cursor-pointer rounded-lg bg-blue-950 p-2 text-white" type="submit">
+            Kirim
+          </button>
+        </form>
+      );
+
+    return (
+      <div className="flex gap-x-1">
+        <Link to="/login" className="text-blue-600 visited:text-purple-600">
+          <p>Login</p>
+        </Link>
+        untuk memberi komentar
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">
@@ -46,12 +81,8 @@ function ThreadDetail() {
         <p>{threadDetail?.postedAt}</p>
       </div>
       <p className="text-xl font-medium">Beri komentar </p>
-      <div className="flex gap-x-1">
-        <Link to="/login" className="text-blue-600 visited:text-purple-600">
-          <p>Login</p>
-        </Link>
-        untuk memberi komentar
-      </div>
+
+      {renderCommentSection()}
 
       <p className="my-4 text-xl font-medium">Komentar ({threadDetail?.comments?.length})</p>
       {threadDetail?.comments?.map((comment, index) => (
