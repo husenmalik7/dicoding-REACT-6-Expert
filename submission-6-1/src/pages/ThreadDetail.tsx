@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { asyncReceiveThreadDetail } from '../states/threadDetail/action';
+import { asyncAddComment, asyncReceiveThreadDetail } from '../states/threadDetail/action';
 
 import ThumbsUpIcon from '../assets/icons/ThumbsUpIcon';
 import ThumbsDownIcon from '../assets/icons/ThumbsDownIcon';
@@ -14,13 +14,16 @@ import { postedAt } from '../utils';
 import type { AppDispatch, RootState } from '../states';
 
 function ThreadDetail() {
-  const { id } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
 
   const threadDetail = useSelector(selectMappedThreads);
   const authUser = useSelector((state: RootState) => state.authUser);
-  const dispatch = useDispatch<AppDispatch>();
+
+  const { id } = useParams();
 
   const [content, setContent] = useState('');
+
+  const editableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (id) {
@@ -30,9 +33,11 @@ function ThreadDetail() {
 
   function onComment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    console.log(content);
-    console.log(id);
+    dispatch(asyncAddComment({ threadId: id!, content }));
+    setContent('');
+    if (editableRef.current) {
+      editableRef.current.innerHTML = '';
+    }
   }
 
   function renderCommentSection() {
@@ -40,6 +45,7 @@ function ThreadDetail() {
       return (
         <form onSubmit={(e) => onComment(e)}>
           <div
+            ref={editableRef}
             className="min-h-24 rounded-lg border-1 p-2"
             contentEditable="true"
             onInput={(e) => setContent(e.currentTarget.innerHTML)}
