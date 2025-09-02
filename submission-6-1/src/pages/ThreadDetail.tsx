@@ -20,7 +20,7 @@ function ThreadDetail() {
   const authUser = useSelector((state: RootState) => state.authUser);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [comment, setComment] = useState('');
+  const [content, setContent] = useState('');
 
   useEffect(() => {
     if (id) {
@@ -31,7 +31,8 @@ function ThreadDetail() {
   function onComment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log(comment);
+    console.log(content);
+    console.log(id);
   }
 
   function renderCommentSection() {
@@ -41,7 +42,7 @@ function ThreadDetail() {
           <div
             className="min-h-24 rounded-lg border-1 p-2"
             contentEditable="true"
-            onInput={(e) => setComment(e.currentTarget.innerHTML)}
+            onInput={(e) => setContent(e.currentTarget.innerHTML)}
           ></div>
           <button className="mt-2 w-full cursor-pointer rounded-lg bg-blue-950 p-2 text-white" type="submit">
             Kirim

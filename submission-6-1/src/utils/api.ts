@@ -136,6 +136,32 @@ const api = (() => {
     return user;
   }
 
+  async function createComment({ threadId, content }: { threadId: string; content: string }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/threads/${threadId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content,
+      }),
+    });
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const {
+      data: { thread },
+    } = responseJson;
+
+    return thread;
+  }
+
   async function createThread({ title, body, category }: { title: string; body: string; category: string }) {
     const response = await _fetchWithAuth(`${BASE_URL}/threads`, {
       method: 'POST',
@@ -201,6 +227,7 @@ const api = (() => {
     putAccessToken,
     getOwnProfile,
     createThread,
+    createComment,
   };
 })();
 
