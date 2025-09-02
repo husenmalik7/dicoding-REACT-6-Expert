@@ -38,6 +38,7 @@ function ThreadDetail() {
     if (editableRef.current) {
       editableRef.current.innerHTML = '';
     }
+    dispatch(asyncReceiveThreadDetail(id!));
   }
 
   function renderCommentSection() {
