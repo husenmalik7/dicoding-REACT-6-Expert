@@ -156,10 +156,10 @@ const api = (() => {
     }
 
     const {
-      data: { thread },
+      data: { comment },
     } = responseJson;
 
-    return thread;
+    return comment;
   }
 
   async function createThread({ title, body, category }: { title: string; body: string; category: string }) {
