@@ -1,38 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Leaderboards from './pages/Leaderboards';
+import ThreadDetail from './pages/ThreadDetail';
+import NewThread from './pages/NewThread';
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+import { asyncUnsetAuthUser } from './states/authUser/action';
+import { asyncPreloadProcess } from './states/isPreload/action';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const authUser = useSelector((state) => state.authUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
+
+  function onLogout() {
+    dispatch(asyncUnsetAuthUser());
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <h1 className='text-2xl'>text-2xl</h1>
-      <h1 className='text-xl'>text-xl</h1>
-      <h1 className='text-8xl'>text-8xl</h1>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="bg-gray-100">
+      <Header />
+
+      <main className="m-auto min-h-screen max-w-3xl bg-white py-16">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/leaderboards" element={<Leaderboards />} />
+          <Route path="/threads/:id" element={<ThreadDetail />} />
+          <Route path="/new" element={<NewThread />} />
+        </Routes>
+      </main>
+
+      <Footer authUser={authUser} logout={onLogout} />
+    </div>
+  );
 }
 
-export default App
+export default App;
